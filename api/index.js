@@ -1,33 +1,40 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import userRoutes from "./routes/user.route.js";
-import authRoutes from "./routes/auth.route.js";
+import express from "express"; // Importing Express framework
+import mongoose from "mongoose"; // Importing mongoose for MongoDB connection
+import dotenv from "dotenv"; // Importing dotenv for environment variables
+import userRoutes from "./routes/user.route.js"; // Importing user routes
+import authRoutes from "./routes/auth.route.js"; // Importing auth routes
 
-dotenv.config();
+dotenv.config(); // Loading environment variables from .env file
 
+// Connecting to MongoDB using mongoose
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("MongoDB is connected");
   })
-  .catch(() => {
-    console.log(err);
+  .catch((err) => {
+    console.log(err); // Log error if MongoDB connection fails
   });
 
-const app = express();
+const app = express(); // Creating an Express application
 
-app.use(express.json());
+app.use(express.json()); // Middleware to parse JSON request bodies
 
 app.listen(3000, () => {
-  console.log("server is running on port : 3000");
+  console.log("Server is running on port : 3000");
 });
-app.use("/api/user", userRoutes);
-app.use("/api/auth", authRoutes);
 
+// Routes
+app.use("/api/user", userRoutes); // Mounting user routes under /api/user
+app.use("/api/auth", authRoutes); // Mounting auth routes under /api/auth
+
+// Error handling middleware
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
+  const statusCode = err.statusCode || 500; // Default to 500 if no statusCode is provided
+  const message = err.message || "Internal Server Error"; // Default error message
   res.status(statusCode).json({
     success: false,
     statusCode,
