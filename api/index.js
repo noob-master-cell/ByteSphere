@@ -8,10 +8,7 @@ dotenv.config(); // Loading environment variables from .env file
 
 // Connecting to MongoDB using mongoose
 mongoose
-  .connect(process.env.MONGO, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("MongoDB is connected");
   })
