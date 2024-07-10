@@ -1,12 +1,22 @@
 import React from "react";
-import { Navbar, TextInput, Button } from "flowbite-react";
+import {
+  Navbar,
+  TextInput,
+  Button,
+  Dropdown,
+  Avatar,
+  DropdownItem,
+} from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   // Conditionally hide the search form based on the current route
   const path = useLocation().pathname;
+  const { currentUser } = useSelector((state) => state.user);
+
   const shouldShowSearch = path !== "/sign-up" && path !== "/sign-in"; // Updated conditional rendering
 
   return (
@@ -50,16 +60,42 @@ const Header = () => {
         >
           <FaMoon />
         </Button>
-
-        {/* Sign-in button linking to the sign-in page */}
-        <Link to="/sign-in">
-          <Button
-            outline
-            className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white outline-none transition-transform transform hover:scale-105"
+        {currentUser ? (
+          <Dropdown
+            className=""
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
           >
-            Sign In
-          </Button>
-        </Link>
+            <Dropdown.Header>
+              <span className="block text-sm font-medium truncate">
+                @{currentUser.username}
+              </span>
+            </Dropdown.Header>
+            <Link to="/dashboard?tab=profile">
+              <DropdownItem className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white">
+                Profile
+              </DropdownItem>
+            </Link>
+            <Dropdown.Divider />
+            <Link to="/sign-in">
+              <DropdownItem className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white">
+                Sign Out
+              </DropdownItem>
+            </Link>
+          </Dropdown>
+        ) : (
+          <Link to="/sign-in">
+            <Button
+              outline
+              className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white outline-none transition-transform transform hover:scale-105"
+            >
+              Sign In
+            </Button>
+          </Link>
+        )}
 
         {/* Navbar toggle button for small screens */}
         <Navbar.Toggle />
