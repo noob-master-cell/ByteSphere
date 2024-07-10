@@ -37,14 +37,14 @@ export const signup = async (req, res, next) => {
 
 // Sign-in endpoint
 export const signin = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!username || !password || username === "" || password === "") {
+  if (!email || !password || email === "" || password === "") {
     return next(errorHandler(400, "Please fill all the fields"));
   }
 
   try {
-    const validUser = await User.findOne({ username }); // Search by username instead of email
+    const validUser = await User.findOne({ email }); // Search by email instead of username
     if (!validUser) {
       return next(errorHandler(401, "User not found"));
     }

@@ -5,10 +5,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 
 const Header = () => {
-  const path = useLocation().pathname;
-
   // Conditionally hide the search form based on the current route
-  const shouldShowSearch = path !== "/sign-up";
+  const path = useLocation().pathname;
+  const shouldShowSearch = path !== "/sign-up" && path !== "/sign-in"; // Updated conditional rendering
 
   return (
     <Navbar className="border-b-2">
