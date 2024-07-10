@@ -5,6 +5,8 @@ import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa"; // Importing
 
 const Footer = () => {
   const [showFollowPopup, setShowFollowPopup] = useState(false); // State to manage visibility of Follow Us popup
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false); // State to manage visibility of Privacy Policy modal
+  const [showTermsModal, setShowTermsModal] = useState(false); // State to manage visibility of Terms & Conditions modal
 
   // Function to handle clicks on social media icons
   const handleSocialClick = (socialMedia) => {
@@ -31,6 +33,26 @@ const Footer = () => {
     setShowFollowPopup(false);
   };
 
+  // Function to show Privacy Policy modal
+  const handlePrivacyPolicyClick = () => {
+    setShowPrivacyPolicy(true);
+  };
+
+  // Function to close Privacy Policy modal
+  const handleClosePrivacyPolicy = () => {
+    setShowPrivacyPolicy(false);
+  };
+
+  // Function to show Terms & Conditions modal
+  const handleTermsClick = () => {
+    setShowTermsModal(true);
+  };
+
+  // Function to close Terms & Conditions modal
+  const handleCloseTermsModal = () => {
+    setShowTermsModal(false);
+  };
+
   return (
     <footer className="bg-white dark:bg-gray-800 border-t-4 border-indigo-400 dark:border-gray-800 py-4 rounded-t-lg border-l-2 border-r-2 border-b-2 border-l-opacity-30 border-r-opacity-30 border-b-opacity-30 border-opacity-30">
       <div className="container mx-auto px-4">
@@ -55,29 +77,29 @@ const Footer = () => {
               to="/about"
               className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white transition-transform transform hover:scale-105"
             >
-              ABOUT
+              About
             </Link>
             {/* Follow Us Button */}
             <button
               className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white transition-transform transform hover:scale-105"
               onClick={() => setShowFollowPopup(true)}
             >
-              FOLLOW US
+              Follow us
             </button>
-            {/* Privacy Policy Link */}
-            <Link
-              to="/privacy-policy"
+            {/* Privacy Policy Modal Trigger */}
+            <button
+              onClick={handlePrivacyPolicyClick}
               className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white transition-transform transform hover:scale-105"
             >
               Privacy Policy
-            </Link>
-            {/* Terms & Conditions Link */}
-            <Link
-              to="/terms-conditions"
+            </button>
+            {/* Terms & Conditions Modal Trigger */}
+            <button
+              onClick={handleTermsClick}
               className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white transition-transform transform hover:scale-105"
             >
               Terms & Conditions
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -152,7 +174,8 @@ const Footer = () => {
                   className="text-blue-700 hover:text-blue-900 transition-transform transform hover:scale-105"
                   aria-label="LinkedIn"
                 >
-                  <FaLinkedin className="h-6 cursor-pointer" />
+                  <FaLinkedin className="h-8 cursor-pointer" />{" "}
+                  {/* Increased icon size */}
                 </a>
                 {/* GitHub Icon */}
                 <a
@@ -162,7 +185,8 @@ const Footer = () => {
                   className="text-gray-600 hover:text-gray-800 transition-transform transform hover:scale-105"
                   aria-label="GitHub"
                 >
-                  <FaGithub className="h-6 cursor-pointer" />
+                  <FaGithub className="h-8 cursor-pointer" />{" "}
+                  {/* Increased icon size */}
                 </a>
                 {/* Instagram Icon */}
                 <a
@@ -172,10 +196,49 @@ const Footer = () => {
                   className="text-pink-500 hover:text-pink-700 transition-transform transform hover:scale-105"
                   aria-label="Instagram"
                 >
-                  <FaInstagram className="h-6 cursor-pointer" />
+                  <FaInstagram className="h-8 cursor-pointer" />{" "}
+                  {/* Increased icon size */}
                 </a>
               </div>
             </div>
+          </Modal.Body>
+        </Modal>
+      )}
+
+      {/* Privacy Policy Modal */}
+      {showPrivacyPolicy && (
+        <Modal
+          show={true}
+          size="lg"
+          popup={true}
+          onClose={handleClosePrivacyPolicy}
+        >
+          <Modal.Header onClose={handleClosePrivacyPolicy}>
+            Privacy Policy
+          </Modal.Header>
+          <Modal.Body>
+            <p className="text-gray-700 dark:text-gray-300">
+              Insert your Privacy Policy content here...
+            </p>
+          </Modal.Body>
+        </Modal>
+      )}
+
+      {/* Terms & Conditions Modal */}
+      {showTermsModal && (
+        <Modal
+          show={true}
+          size="lg"
+          popup={true}
+          onClose={handleCloseTermsModal}
+        >
+          <Modal.Header onClose={handleCloseTermsModal}>
+            Terms & Conditions
+          </Modal.Header>
+          <Modal.Body>
+            <p className="text-gray-700 dark:text-gray-300">
+              Insert your Terms & Conditions content here...
+            </p>
           </Modal.Body>
         </Modal>
       )}

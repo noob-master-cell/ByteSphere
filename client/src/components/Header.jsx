@@ -7,6 +7,9 @@ import { FaMoon } from "react-icons/fa";
 const Header = () => {
   const path = useLocation().pathname;
 
+  // Conditionally hide the search form based on the current route
+  const shouldShowSearch = path !== "/sign-up";
+
   return (
     <Navbar className="border-b-2">
       {/* Logo and Home link */}
@@ -21,15 +24,17 @@ const Header = () => {
         Blog
       </Link>
 
-      {/* Search form, only displayed on large screens */}
-      <form>
-        <TextInput
-          type="text"
-          placeholder="Search here . ."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-        />
-      </form>
+      {/* Conditional rendering of search form */}
+      {shouldShowSearch && (
+        <form>
+          <TextInput
+            type="text"
+            placeholder="Search here . ."
+            rightIcon={AiOutlineSearch}
+            className="hidden lg:inline"
+          />
+        </form>
+      )}
 
       {/* Search button, displayed on small screens */}
       <Button className="w-12 h-10 lg:hidden transition-transform transform hover:scale-105">
@@ -50,9 +55,8 @@ const Header = () => {
         {/* Sign-in button linking to the sign-in page */}
         <Link to="/sign-in">
           <Button
-            gradientDuoTone="purpleToBlue"
             outline
-            className="transition-transform transform hover:scale-105"
+            className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white outline-none transition-transform transform hover:scale-105"
           >
             Sign In
           </Button>
