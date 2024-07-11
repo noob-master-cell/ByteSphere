@@ -119,7 +119,7 @@ const Footer = () => {
               href="https://www.linkedin.com/in/dheeraj-karwasra-46b211190/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-700 dark:text-gray-300 transition-transform transform hover:scale-105"
+              className="text-blue-700 dark:text-blue-700 transition-transform transform hover:scale-105"
               aria-label="LinkedIn"
               onClick={() => handleSocialClick("linkedin")}
             >
@@ -130,7 +130,7 @@ const Footer = () => {
               href="https://github.com/noob-master-cell"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-300 transition-transform transform hover:scale-105"
+              className="text-gray-600 dark:text-gray-600 transition-transform transform hover:scale-105"
               aria-label="GitHub"
               onClick={() => handleSocialClick("github")}
             >
@@ -141,7 +141,7 @@ const Footer = () => {
               href="https://www.instagram.com/_im_sane_/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-pink-500 dark:text-gray-300 transition-transform transform hover:scale-105"
+              className="text-pink-500 dark:text-pink-500 transition-transform transform hover:scale-105"
               aria-label="Instagram"
               onClick={() => handleSocialClick("instagram")}
             >
@@ -171,7 +171,7 @@ const Footer = () => {
                   href="https://www.linkedin.com/in/dheeraj-karwasra-46b211190/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-700 hover:text-blue-900 transition-transform transform hover:scale-105"
+                  className="text-blue-700 hover:text-blue-900 dark:hover:text-blue-900 transition-transform transform hover:scale-105"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin className="h-8 cursor-pointer" />{" "}
@@ -182,7 +182,7 @@ const Footer = () => {
                   href="https://github.com/noob-master-cell"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-800 transition-transform transform hover:scale-105"
+                  className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-800 transition-transform transform hover:scale-105"
                   aria-label="GitHub"
                 >
                   <FaGithub className="h-8 cursor-pointer" />{" "}
@@ -193,7 +193,7 @@ const Footer = () => {
                   href="https://www.instagram.com/_im_sane_/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-pink-500 hover:text-pink-700 transition-transform transform hover:scale-105"
+                  className="text-pink-500 hover:text-pink-700 dark:hover:text-pink-700 transition-transform transform hover:scale-105"
                   aria-label="Instagram"
                 >
                   <FaInstagram className="h-8 cursor-pointer" />{" "}

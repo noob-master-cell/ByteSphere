@@ -9,60 +9,56 @@ import {
 } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa"; // Import FaSun icon
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 const Header = () => {
-  // Conditionally hide the search form based on the current route
   const path = useLocation().pathname;
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  const theme = useSelector((state) => state.theme);
 
-  const shouldShowSearch = path !== "/sign-up" && path !== "/sign-in"; // Updated conditional rendering
+  const shouldShowSearch = path !== "/sign-up" && path !== "/sign-in";
 
   return (
-    <Navbar className="border-b-2">
-      {/* Logo and Home link */}
+    <Navbar className="border-b-2 dark:bg-[rgb(16,23,42)]">
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex items-center transition-transform transform hover:scale-105"
       >
-        {/* Logo text with gradient background */}
         <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-2">
           Tech
         </span>
         Blog
       </Link>
 
-      {/* Conditional rendering of search form */}
       {shouldShowSearch && (
         <form>
           <TextInput
             type="text"
             placeholder="Search here . ."
             rightIcon={AiOutlineSearch}
-            className="hidden lg:inline"
+            className="hidden lg:inline dark:bg-gray-700 dark:text-white"
           />
         </form>
       )}
 
-      {/* Search button, displayed on small screens */}
-      <Button className="w-12 h-10 lg:hidden transition-transform transform hover:scale-105">
+      <Button className="w-12 h-10 lg:hidden transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white">
         <AiOutlineSearch />
       </Button>
 
-      {/* Container for additional buttons: dark mode toggle and sign-in */}
       <div className="flex gap-2 md:order-2">
-        {/* Dark mode toggle button, displayed on small screens and up */}
         <Button
-          className="w-12 h-10 hidden sm:inline transition-transform transform hover:scale-105"
+          className="w-12 h-10  hidden sm:inline transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white"
           color="gray"
           pill
+          onClick={() => dispatch(toggleTheme())}
         >
-          <FaMoon />
+          {theme === "light" ? <FaMoon /> : <FaSun />}
         </Button>
         {currentUser ? (
           <Dropdown
-            className=""
             arrowIcon={false}
             inline
             label={
@@ -97,13 +93,10 @@ const Header = () => {
           </Link>
         )}
 
-        {/* Navbar toggle button for small screens */}
         <Navbar.Toggle />
       </div>
 
-      {/* Navbar menu items, collapsible on smaller screens */}
       <Navbar.Collapse>
-        {/* Home link */}
         <Navbar.Link active={path === "/"} as={"div"}>
           <Link
             to="/"
@@ -112,8 +105,6 @@ const Header = () => {
             Home
           </Link>
         </Navbar.Link>
-
-        {/* Projects link */}
         <Navbar.Link active={path === "/projects"} as={"div"}>
           <Link
             to="/projects"
@@ -122,8 +113,6 @@ const Header = () => {
             Projects
           </Link>
         </Navbar.Link>
-
-        {/* About link */}
         <Navbar.Link active={path === "/about"} as={"div"}>
           <Link
             to="/about"
