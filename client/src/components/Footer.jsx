@@ -54,7 +54,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white dark:bg-gray-800 border-t-4 border-indigo-400 dark:border-gray-800 py-4 rounded-t-lg border-l-2 border-r-2 border-b-2 border-l-opacity-30 border-r-opacity-30 border-b-opacity-30 border-opacity-30">
+    <footer className="bg-white dark:bg-gray-800 border-t-4 border-indigo-400 dark:border-gray-600 py-4 rounded-t-lg border-l-2 border-r-2 border-b-2 border-l-opacity-30 border-r-opacity-30 border-b-opacity-30 border-opacity-30">
       <div className="container mx-auto px-4">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -104,7 +104,7 @@ const Footer = () => {
         </div>
 
         {/* Horizontal line separator */}
-        <hr className="border-gray-300 dark:border-gray-700 my-4" />
+        <hr className="border-gray-300 dark:border-gray-500 my-4" />
 
         {/* Bottom Section */}
         <div className="flex items-center justify-between">
@@ -119,7 +119,7 @@ const Footer = () => {
               href="https://www.linkedin.com/in/dheeraj-karwasra-46b211190/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-700 dark:text-blue-700 transition-transform transform hover:scale-105"
+              className="text-blue-700 dark:text-blue-500 transition-transform transform hover:scale-105"
               aria-label="LinkedIn"
               onClick={() => handleSocialClick("linkedin")}
             >
@@ -130,7 +130,7 @@ const Footer = () => {
               href="https://github.com/noob-master-cell"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-600 transition-transform transform hover:scale-105"
+              className="text-gray-600 dark:text-gray-300 transition-transform transform hover:scale-105"
               aria-label="GitHub"
               onClick={() => handleSocialClick("github")}
             >
@@ -141,7 +141,7 @@ const Footer = () => {
               href="https://www.instagram.com/_im_sane_/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-pink-500 dark:text-pink-500 transition-transform transform hover:scale-105"
+              className="text-pink-500 dark:text-pink-400 transition-transform transform hover:scale-105"
               aria-label="Instagram"
               onClick={() => handleSocialClick("instagram")}
             >
