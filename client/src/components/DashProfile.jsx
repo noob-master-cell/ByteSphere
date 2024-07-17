@@ -13,7 +13,9 @@ const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  //console.log("Upload progress", imageUploadProgress, imageFileUploadError);
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -48,6 +50,11 @@ const DashProfile = () => {
 
     uploadTask.on(
       "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImageUploadProgress(progress.toFixed(0));
+      },
       (error) => {
         setImageFileUploadError(
           "Could not upload image (size should be less than 2MB)"

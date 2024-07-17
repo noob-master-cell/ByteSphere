@@ -64,10 +64,10 @@ const Footer = () => {
             className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex items-center mb-2 md:mb-0 transition-transform transform hover:scale-105"
           >
             {/* Logo text with gradient background */}
-            <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-2">
-              Tech
+            <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-1">
+              Code
             </span>
-            Blog
+            Scape
           </Link>
 
           {/* Navigation Links */}
@@ -110,7 +110,7 @@ const Footer = () => {
         <div className="flex items-center justify-between">
           {/* Copyright */}
           <p className="text-gray-600 dark:text-gray-300">
-            &copy; 2024 Tech Blog
+            &copy; 2024 CodeScape
           </p>
           {/* Social Media Icons */}
           <div className="flex items-center space-x-4">

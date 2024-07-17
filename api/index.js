@@ -3,6 +3,7 @@ import mongoose from "mongoose"; // Importing mongoose for MongoDB connection
 import dotenv from "dotenv"; // Importing dotenv for environment variables
 import userRoutes from "./routes/user.route.js"; // Importing user routes
 import authRoutes from "./routes/auth.route.js"; // Importing auth routes
+import cookieParser from "cookie-parser"; // Importing cookie-parser for managing cookies
 
 dotenv.config(); // Loading environment variables from .env file
 
@@ -19,6 +20,7 @@ mongoose
 const app = express(); // Creating an Express application
 
 app.use(express.json()); // Middleware to parse JSON request bodies
+app.use(cookieParser()); // Middleware to parse cookies
 
 app.listen(3000, () => {
   console.log("Server is running on port : 3000");

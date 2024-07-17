@@ -27,10 +27,10 @@ const Header = () => {
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex items-center transition-transform transform hover:scale-105"
       >
-        <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-2">
-          Tech
+        <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-1">
+          Code
         </span>
-        Blog
+        Scape
       </Link>
 
       {shouldShowSearch && (
