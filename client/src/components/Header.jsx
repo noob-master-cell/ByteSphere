@@ -12,6 +12,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa"; // Import FaSun icon
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
+import { signoutSuccess } from "../redux/user/userSlice";
 
 const Header = () => {
   const path = useLocation().pathname;
@@ -20,6 +21,22 @@ const Header = () => {
   const theme = useSelector((state) => state.theme);
 
   const shouldShowSearch = path !== "/sign-up" && path !== "/sign-in";
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <Navbar className="border-b-2 dark:bg-[rgb(16,23,42)]">
@@ -44,7 +61,7 @@ const Header = () => {
         </form>
       )}
 
-      <Button className="w-12 h-10 lg:hidden transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white">
+      <Button className="w-12 h-10 hidden lg transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white">
         <AiOutlineSearch />
       </Button>
 
@@ -77,7 +94,10 @@ const Header = () => {
             </Link>
             <Dropdown.Divider />
             <Link to="/sign-in">
-              <DropdownItem className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white">
+              <DropdownItem
+                className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
+                onClick={handleSignout}
+              >
                 Sign Out
               </DropdownItem>
             </Link>
