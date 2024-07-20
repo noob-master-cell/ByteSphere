@@ -4,6 +4,9 @@ import dotenv from "dotenv"; // Importing dotenv for environment variables
 import userRoutes from "./routes/user.route.js"; // Importing user routes
 import authRoutes from "./routes/auth.route.js"; // Importing auth routes
 import cookieParser from "cookie-parser"; // Importing cookie-parser for managing cookies
+import postRoutes from "./routes/post.route.js"; // Importing post routes
+
+import "dotenv/config";
 
 dotenv.config(); // Loading environment variables from .env file
 
@@ -29,6 +32,7 @@ app.listen(3000, () => {
 // Routes
 app.use("/api/user", userRoutes); // Mounting user routes under /api/user
 app.use("/api/auth", authRoutes); // Mounting auth routes under /api/auth
+app.use("/api/post", postRoutes); // Mounting post routes under /api/post
 
 // Error handling middleware
 app.use((err, req, res, next) => {

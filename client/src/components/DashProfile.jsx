@@ -27,6 +27,7 @@ export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
@@ -34,6 +35,12 @@ export default function DashProfile() {
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
+  const [updatedFields, setUpdatedFields] = useState({
+    profilePicture: false,
+    username: false,
+    email: false,
+    password: false,
+  });
   const filePickerRef = useRef();
   const dispatch = useDispatch();
   const handleImageChange = (e) => {
@@ -41,6 +48,7 @@ export default function DashProfile() {
     if (file) {
       setImageFile(file);
       setImageFileUrl(URL.createObjectURL(file));
+      setUpdatedFields({ ...updatedFields, profilePicture: true });
     }
   };
   useEffect(() => {
@@ -50,16 +58,6 @@ export default function DashProfile() {
   }, [imageFile]);
 
   const uploadImage = async () => {
-    // service firebase.storage {
-    //   match /b/{bucket}/o {
-    //     match /{allPaths=**} {
-    //       allow read;
-    //       allow write: if
-    //       request.resource.size < 2 * 1024 * 1024 &&
-    //       request.resource.contentType.matches('image/.*')
-    //     }
-    //   }
-    // }
     setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
@@ -94,7 +92,32 @@ export default function DashProfile() {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+    setUpdatedFields({ ...updatedFields, [id]: true });
+  };
+
+  const generateSuccessMessage = () => {
+    const updatedFieldNames = Object.keys(updatedFields).filter(
+      (field) => updatedFields[field]
+    );
+
+    if (updatedFieldNames.length === 1) {
+      switch (updatedFieldNames[0]) {
+        case "profilePicture":
+          return "Profile picture updated successfully";
+        case "username":
+          return "Username updated successfully";
+        case "email":
+          return "Email updated successfully";
+        case "password":
+          return "Password updated successfully";
+        default:
+          return "Profile updated successfully";
+      }
+    } else {
+      return "Profile updated successfully";
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -124,13 +147,20 @@ export default function DashProfile() {
         setUpdateUserError(data.message);
       } else {
         dispatch(updateSuccess(data));
-        setUpdateUserSuccess("User's profile updated successfully");
+        setUpdateUserSuccess(generateSuccessMessage());
+        setUpdatedFields({
+          profilePicture: false,
+          username: false,
+          email: false,
+          password: false,
+        });
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
     }
   };
+
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -164,6 +194,7 @@ export default function DashProfile() {
       console.log(error.message);
     }
   };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -176,35 +207,50 @@ export default function DashProfile() {
           hidden
         />
         <div
-          className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
+          className="relative w-32 h-32 self-center cursor-pointer shadow-lg overflow-hidden rounded-full transition-transform transform hover:scale-105 hover:shadow-xl"
           onClick={() => filePickerRef.current.click()}
         >
-          {imageFileUploadProgress && (
-            <CircularProgressbar
-              value={imageFileUploadProgress || 0}
-              text={`${imageFileUploadProgress}%`}
-              strokeWidth={5}
-              styles={{
-                root: {
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                },
-                path: {
-                  stroke: `rgba(62, 152, 199, ${
-                    imageFileUploadProgress / 100
-                  })`,
-                },
-              }}
-            />
+          {imageFileUploadProgress !== null && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <CircularProgressbar
+                value={imageFileUploadProgress || 0}
+                text={`${imageFileUploadProgress}%`}
+                strokeWidth={4} // Reduced thickness
+                styles={{
+                  path: {
+                    stroke: "url(#gradient)", // Apply gradient to the path
+                  },
+                  trail: {
+                    stroke: "#e6e6e6",
+                  },
+                  text: {
+                    fill: "#fff",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  },
+                }}
+              />
+              <svg className="absolute inset-0 w-full h-full">
+                <defs>
+                  <linearGradient
+                    id="gradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopColor="rgba(99, 102, 241, 1)" />
+                    <stop offset="100%" stopColor="rgba(196, 124, 255, 1)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
           )}
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
-              imageFileUploadProgress &&
+            className={`rounded-full w-full h-full object-cover border-4 border-gray-200 shadow-md transition-transform transform hover:scale-105 hover:border-gray-300 ${
+              imageFileUploadProgress !== null &&
               imageFileUploadProgress < 100 &&
               "opacity-60"
             }`}

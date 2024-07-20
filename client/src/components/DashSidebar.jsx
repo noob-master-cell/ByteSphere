@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 
 import { Link, useLocation } from "react-router-dom";
 import { Sidebar } from "flowbite-react";
-import { HiUser, HiArrowSmRight } from "react-icons/hi";
+import {
+  HiUser,
+  HiArrowSmRight,
+  HiDocumentText,
+  HiOutlineUserGroup,
+} from "react-icons/hi";
 import { signoutSuccess } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const DashSidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [tab, setTab] = useState("");
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -43,11 +49,32 @@ const DashSidebar = () => {
             to="/dashboard?tab=profile"
             active={tab === "profile"}
             icon={HiUser}
-            label={"User"}
+            label={currentUser.isAdmin ? "Admin" : "User"}
             labelColor="dark"
           >
             Profie
           </Sidebar.Item>
+          {currentUser.isAdmin && (
+            <Sidebar.Item
+              as={Link}
+              to="/dashboard?tab=posts"
+              active={tab === "posts"}
+              icon={HiDocumentText}
+            >
+              Posts
+            </Sidebar.Item>
+          )}
+          {currentUser.isAdmin && (
+            <Sidebar.Item
+              as={Link}
+              to="/dashboard?tab=users"
+              active={tab === "users"}
+              icon={HiOutlineUserGroup}
+            >
+              Users
+            </Sidebar.Item>
+          )}
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"

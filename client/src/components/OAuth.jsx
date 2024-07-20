@@ -5,12 +5,22 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import app from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OAuth = () => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const getButtonLabel = () => {
+    if (location.pathname === "/sign-up") {
+      return "Sign up with Google account";
+    } else if (location.pathname === "/sign-in") {
+      return "Sign in with Google account";
+    }
+  };
+
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
@@ -42,7 +52,11 @@ const OAuth = () => {
       onClick={handleGoogleClick}
     >
       <GoogleIcon />
-      <span className="ml-2">Sign in with Google</span>
+      <span className="ml-2">
+        {location.pathname === "/sign-up"
+          ? "Sign up with Google account"
+          : "Sign in with Google account"}
+      </span>
     </Button>
   );
 };

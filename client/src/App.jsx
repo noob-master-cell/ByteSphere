@@ -9,26 +9,29 @@ import Projects from "./pages/Projects"; // Importing Projects component
 import Header from "./components/Header"; // Importing Header component
 import Footer from "./components/Footer"; // Importing Footer component
 import PrivateRoute from "./components/PrivateRoute";
+import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
+import CreatePost from "./pages/CreatePost";
+import UpdatePost from "./pages/UpdatePost";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header /> {/* Header component displayed on every page */}
+      <Header />
       <Routes>
-        <Route path="/" element={<Home />} /> {/* Route for Home page */}
-        <Route path="/about" element={<About />} /> {/* Route for About page */}
-        <Route path="/sign-in" element={<SignIn />} />{" "}
-        {/* Route for SignIn page */}
-        <Route path="/sign-up" element={<SignUp />} />{" "}
-        {/* Route for SignUp page */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          {/*Private  Route for Dashboard page */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="/projects" element={<Projects />} />{" "}
-        {/* Route for Projects page */}
+        <Route element={<OnlyAdminPrivateRoute />}>
+          <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/update-post/:postId" element={<UpdatePost />} />
+        </Route>
+        <Route path="/projects" element={<Projects />} />
       </Routes>
-      <Footer /> {/* Footer component displayed on every page */}
+      <Footer />
     </BrowserRouter>
   );
 }
