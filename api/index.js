@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.route.js"; // Importing user routes
 import authRoutes from "./routes/auth.route.js"; // Importing auth routes
 import cookieParser from "cookie-parser"; // Importing cookie-parser for managing cookies
 import postRoutes from "./routes/post.route.js"; // Importing post routes
+import path from "'path";
 
 import "dotenv/config";
 
@@ -20,6 +21,8 @@ mongoose
     console.log(err); // Log error if MongoDB connection fails
   });
 
+const __dirname = path.resolve();
+
 const app = express(); // Creating an Express application
 
 app.use(express.json()); // Middleware to parse JSON request bodies
@@ -33,6 +36,12 @@ app.listen(3000, () => {
 app.use("/api/user", userRoutes); // Mounting user routes under /api/user
 app.use("/api/auth", authRoutes); // Mounting auth routes under /api/auth
 app.use("/api/post", postRoutes); // Mounting post routes under /api/post
+
+app.use(express.static(path.join(__dirname, "/client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client", "dist", "index.html"));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
