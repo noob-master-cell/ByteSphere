@@ -5,7 +5,7 @@ import userRoutes from "./routes/user.route.js"; // Importing user routes
 import authRoutes from "./routes/auth.route.js"; // Importing auth routes
 import cookieParser from "cookie-parser"; // Importing cookie-parser for managing cookies
 import postRoutes from "./routes/post.route.js"; // Importing post routes
-import path from "'path";
+import path from "path";
 
 import "dotenv/config";
 
