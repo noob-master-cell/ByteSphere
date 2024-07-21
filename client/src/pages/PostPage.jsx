@@ -91,22 +91,30 @@ export default function PostPage() {
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl bg-gray-200 dark:bg-gray-800 rounded-lg p-4">
         {post && post.title}
       </h1>
-      <Link
-        to={`/search?category=${post && post.category}`}
-        className="self-center mt-5"
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Button
-          className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white"
-          pill={true}
-          size="xs"
+        <lable
+          className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white my-4"
+          style={{
+            padding: "0.25em 0.75em",
+            borderRadius: "9999px",
+            fontSize: "0.75rem",
+          }}
         >
           {post && post.category}
-        </Button>
-      </Link>
+        </lable>
+      </div>
+
       <img
         src={post && post.image}
         alt={post && post.title}
-        className="mt-10 p-3 max-h-[600px] w-full object-cover rounded-lg shadow-lg"
+        className="mt-3 p-3 max-h-[600px] w-full object-cover rounded-lg shadow-lg"
       />
       <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs">
         <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
