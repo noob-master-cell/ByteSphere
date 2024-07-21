@@ -7,6 +7,12 @@ import {
 } from "react-icons/hi";
 import { Button, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
+import {
+  FaUsers,
+  FaThumbsUp,
+  FaThumbsDown,
+  FaRegFileAlt,
+} from "react-icons/fa";
 
 export default function DashboardComp() {
   const [users, setUsers] = useState([]);
@@ -70,13 +76,13 @@ export default function DashboardComp() {
   return (
     <div className="p-3 md:mx-auto">
       <div className="flex-wrap flex gap-4 justify-center">
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-          <div className="flex justify-between">
-            <div className="">
-              <h3 className="text-gray-500 text-md uppercase">Total Users</h3>
-              <p className="text-2xl">{totalUsers}</p>
+        <div className="flex flex-col p-4 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-lg shadow-lg">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-gray-500 text-sm uppercase">Total Users</h3>
+              <p className="text-3xl font-semibold">{totalUsers}</p>
             </div>
-            <HiOutlineUserGroup className="bg-teal-600  text-white rounded-full text-5xl p-3 shadow-lg" />
+            <FaUsers className="bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -86,13 +92,13 @@ export default function DashboardComp() {
             <div className="text-gray-500">Last month</div>
           </div>
         </div>
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-          <div className="flex justify-between">
-            <div className="">
-              <h3 className="text-gray-500 text-md uppercase">Total Upvotes</h3>
-              <p className="text-2xl">{totalUpvotes}</p>
+        <div className="flex flex-col p-4 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-lg shadow-lg">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-gray-500 text-sm uppercase">Total Upvotes</h3>
+              <p className="text-3xl font-semibold">{totalUpvotes}</p>
             </div>
-            <HiArrowNarrowUp className="bg-indigo-600 text-white rounded-full text-5xl p-3 shadow-lg" />
+            <FaThumbsUp className="bg-indigo-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -102,15 +108,15 @@ export default function DashboardComp() {
             <div className="text-gray-500">Last month</div>
           </div>
         </div>
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-          <div className="flex justify-between">
-            <div className="">
-              <h3 className="text-gray-500 text-md uppercase">
+        <div className="flex flex-col p-4 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-lg shadow-lg">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-gray-500 text-sm uppercase">
                 Total Downvotes
               </h3>
-              <p className="text-2xl">{totalDownvotes}</p>
+              <p className="text-3xl font-semibold">{totalDownvotes}</p>
             </div>
-            <HiArrowNarrowUp className="bg-red-600 text-white rounded-full text-5xl p-3 shadow-lg" />
+            <FaThumbsDown className="bg-red-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -120,13 +126,13 @@ export default function DashboardComp() {
             <div className="text-gray-500">Last month</div>
           </div>
         </div>
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-          <div className="flex justify-between">
-            <div className="">
-              <h3 className="text-gray-500 text-md uppercase">Total Posts</h3>
-              <p className="text-2xl">{totalPosts}</p>
+        <div className="flex flex-col p-4 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-lg shadow-lg">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-gray-500 text-sm uppercase">Total Posts</h3>
+              <p className="text-3xl font-semibold">{totalPosts}</p>
             </div>
-            <HiDocumentText className="bg-lime-600 text-white rounded-full text-5xl p-3 shadow-lg" />
+            <FaRegFileAlt className="bg-lime-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -137,10 +143,10 @@ export default function DashboardComp() {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 py-3 mx-auto justify-center">
-        <div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
-          <div className="flex justify-between p-3 text-sm font-semibold">
-            <h1 className="text-center p-2">Recent users</h1>
+      <div className="flex flex-wrap gap-4 py-4 mx-auto justify-center">
+        <div className="flex flex-col w-full md:w-auto shadow-lg p-4 rounded-lg dark:bg-gray-800">
+          <div className="flex justify-between items-center pb-3 text-sm font-semibold">
+            <h1 className="text-lg p-2">Recent Users</h1>
             <Button
               outline
               className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white outline-none transition-transform transform hover:scale-105"
@@ -150,7 +156,7 @@ export default function DashboardComp() {
           </div>
           <Table hoverable>
             <Table.Head>
-              <Table.HeadCell>User image</Table.HeadCell>
+              <Table.HeadCell>User Image</Table.HeadCell>
               <Table.HeadCell>Username</Table.HeadCell>
             </Table.Head>
             {users &&
@@ -170,9 +176,9 @@ export default function DashboardComp() {
               ))}
           </Table>
         </div>
-        <div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
-          <div className="flex justify-between p-3 text-sm font-semibold">
-            <h1 className="text-center p-2">Recent posts</h1>
+        <div className="flex flex-col w-full md:w-auto shadow-lg p-4 rounded-lg dark:bg-gray-800">
+          <div className="flex justify-between items-center pb-3 text-sm font-semibold">
+            <h1 className="text-lg p-2">Recent Posts</h1>
             <Button
               outline
               className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white outline-none transition-transform transform hover:scale-105"
@@ -182,7 +188,7 @@ export default function DashboardComp() {
           </div>
           <Table hoverable>
             <Table.Head>
-              <Table.HeadCell>Post image</Table.HeadCell>
+              <Table.HeadCell>Post Image</Table.HeadCell>
               <Table.HeadCell>Post Title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
             </Table.Head>
@@ -193,7 +199,7 @@ export default function DashboardComp() {
                     <Table.Cell>
                       <img
                         src={post.image}
-                        alt="user"
+                        alt="post"
                         className="w-14 h-10 rounded-md bg-gray-500"
                       />
                     </Table.Cell>
