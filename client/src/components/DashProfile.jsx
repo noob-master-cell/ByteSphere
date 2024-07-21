@@ -281,6 +281,7 @@ export default function DashProfile() {
         />
         <Button
           type="submit"
+          outline
           className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white transition-transform transform hover:scale-105"
           disabled={loading || imageFileUploading}
         >
@@ -290,6 +291,7 @@ export default function DashProfile() {
           <Link to={"/create-post"}>
             <Button
               type="button"
+              outline
               className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white transition-transform transform hover:scale-105 w-full"
             >
               Create a post

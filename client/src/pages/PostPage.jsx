@@ -1,14 +1,35 @@
 import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import PostCard from "../components/PostCard";
+import { useSelector } from "react-redux";
 
 export default function PostPage() {
   const { postSlug } = useParams();
+  const { currentUser } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
+
+  const handleVote = async (postId, type) => {
+    try {
+      const res = await fetch(`/api/post/${type}/${postId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+      setPost(data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -76,7 +97,7 @@ export default function PostPage() {
       >
         <Button
           className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white"
-          pill
+          pill={true}
           size="xs"
         >
           {post && post.category}
@@ -97,6 +118,21 @@ export default function PostPage() {
         className="p-3 max-w-2xl mx-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
+
+      <div className="flex justify-between items-center max-w-2xl mx-auto my-5">
+        <div className="flex items-center">
+          <FaArrowUp
+            className="cursor-pointer text-gray-400 hover:text-green-500"
+            onClick={() => handleVote(post._id, "upvote")}
+          />
+          <span className="mx-2">{post && post.upvotes.length}</span>
+          <FaArrowDown
+            className="cursor-pointer text-gray-400 hover:text-red-500"
+            onClick={() => handleVote(post._id, "downvote")}
+          />
+          <span className="mx-2">{post && post.downvotes.length}</span>
+        </div>
+      </div>
 
       <div className="flex flex-col justify-center items-center mb-5">
         <h1 className="text-xl mt-5">Recent articles</h1>

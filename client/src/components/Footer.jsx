@@ -94,7 +94,7 @@ const Footer = () => {
 
         <div className="flex items-center justify-between">
           <p className="text-gray-600 dark:text-gray-300">
-            &copy; 2024 ByteSphere
+            &copy; 2024 ByteSphere. All Rights Reserved.
           </p>
           <div className="flex items-center space-x-4">
             <a

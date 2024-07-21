@@ -5,7 +5,6 @@ import About from "./pages/About"; // Importing About component
 import SignIn from "./pages/SignIn"; // Importing SignIn component
 import SignUp from "./pages/SignUp"; // Importing SignUp component
 import Dashboard from "./pages/Dashboard"; // Importing Dashboard component
-import Projects from "./pages/Projects"; // Importing Projects component
 import Header from "./components/Header"; // Importing Header component
 import Footer from "./components/Footer"; // Importing Footer component
 import PrivateRoute from "./components/PrivateRoute";
@@ -30,7 +29,6 @@ function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
-        <Route path="/projects" element={<Projects />} />
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
       <Footer />

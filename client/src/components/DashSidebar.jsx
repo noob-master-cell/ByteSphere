@@ -7,6 +7,7 @@ import {
   HiArrowSmRight,
   HiDocumentText,
   HiOutlineUserGroup,
+  HiChartPie,
 } from "react-icons/hi";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +45,16 @@ const DashSidebar = () => {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
+          {currentUser && currentUser.isAdmin && (
+            <Sidebar.Item
+              as={Link}
+              to="/dashboard?tab=dash"
+              active={tab === "dash" || !tab}
+              icon={HiChartPie}
+            >
+              Dashboard
+            </Sidebar.Item>
+          )}
           <Sidebar.Item
             as={Link}
             to="/dashboard?tab=profile"

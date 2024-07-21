@@ -110,29 +110,31 @@ const Header = () => {
       </div>
 
       <Navbar.Collapse>
-        <Navbar.Link active={path === "/"} as={"div"}>
-          <Link
-            to="/"
-            className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
-          >
-            Home
-          </Link>
+        <Navbar.Link
+          className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
+          active={path === "/"}
+          as={"div"}
+        >
+          <Link to="/">Home</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link
-            to="/projects"
-            className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
+        <Navbar.Link
+          as={"div"}
+          className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
+        >
+          <a
+            href="https://www.freecodecamp.org/news/tag/projects/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Projects
-          </Link>
+          </a>
         </Navbar.Link>
-        <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link
-            to="/about"
-            className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
-          >
-            About
-          </Link>
+        <Navbar.Link
+          className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
+          active={path === "/about"}
+          as={"div"}
+        >
+          <Link to="/about">About</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

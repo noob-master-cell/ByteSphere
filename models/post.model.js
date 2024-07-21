@@ -28,6 +28,8 @@ const postSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

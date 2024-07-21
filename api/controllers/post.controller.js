@@ -45,7 +45,9 @@ export const getposts = async (req, res, next) => {
     })
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
-      .limit(limit);
+      .limit(limit)
+      .populate("upvotes", "username") // Populate upvotes with user info
+      .populate("downvotes", "username"); // Populate downvotes with user info
 
     const totalPosts = await Post.countDocuments();
 
@@ -101,6 +103,56 @@ export const updatepost = async (req, res, next) => {
       { new: true }
     );
     res.status(200).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const upvote = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return next(errorHandler(404, "Post not found"));
+    }
+
+    const userId = req.user.id;
+    if (post.downvotes.includes(userId)) {
+      post.downvotes.pull(userId);
+    }
+
+    if (post.upvotes.includes(userId)) {
+      post.upvotes.pull(userId);
+    } else {
+      post.upvotes.push(userId);
+    }
+
+    await post.save();
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const downvote = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return next(errorHandler(404, "Post not found"));
+    }
+
+    const userId = req.user.id;
+    if (post.upvotes.includes(userId)) {
+      post.upvotes.pull(userId);
+    }
+
+    if (post.downvotes.includes(userId)) {
+      post.downvotes.pull(userId);
+    } else {
+      post.downvotes.push(userId);
+    }
+
+    await post.save();
+    res.status(200).json(post);
   } catch (error) {
     next(error);
   }

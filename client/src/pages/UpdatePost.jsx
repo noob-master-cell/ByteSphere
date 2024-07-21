@@ -142,7 +142,7 @@ export default function UpdatePost() {
             <option value="">Select a category</option>
             <option value="AI/ML">AI/ML</option>
             <option value="Frameworks">Frameworks</option>
-            <option value="AI/ML">Cloud Computing</option>
+            <option value="Cloud Computing">Cloud Computing</option>
             <option value="Coding Language">Coding Language</option>
             <option value="Career">Career</option>
             <option value="Other">Other</option>
