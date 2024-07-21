@@ -140,7 +140,7 @@ const Home = () => {
             <h2 className="text-3xl font-extrabold text-center flex-grow">
               Latest Posts
             </h2>
-            <div className="relative">
+            <div className="relative z-50">
               <button
                 className="px-4 py-2 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white rounded-full hover:scale-105 transition transform"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -148,7 +148,7 @@ const Home = () => {
                 Sort
               </button>
               {isDropdownOpen && (
-                <div className="absolute mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+                <div className="absolute mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg z-50">
                   <button
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => handleSort("newest")}
