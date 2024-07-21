@@ -21,7 +21,6 @@ const SignIn = () => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value.trim() });
 
-    // Clear email and password errors when user types again
     if (id === "email") {
       setEmailError("");
     } else if (id === "password") {
@@ -32,10 +31,8 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate email format using regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Check if email is empty
     if (!formData.email) {
       setEmailError("Email is required.");
       return dispatch(signInFailure("Email is required."));
@@ -43,18 +40,16 @@ const SignIn = () => {
       setEmailError("Please enter a valid email address.");
       return dispatch(signInFailure("Invalid email format."));
     } else {
-      setEmailError(""); // Clear email error if valid
+      setEmailError("");
     }
 
-    // Check if password is empty
     if (!formData.password) {
       setPasswordError("Password is required.");
       return dispatch(signInFailure("Password is required."));
     } else {
-      setPasswordError(""); // Clear password error if valid
+      setPasswordError("");
     }
 
-    // Proceed with sign-in process
     try {
       dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
@@ -87,23 +82,21 @@ const SignIn = () => {
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
-            {/* Logo text with gradient background */}
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-1">
-              Code
+              Byte
             </span>
-            Scape
+            Sphere
           </Link>
-          <p className="text-xl mt-3 font-bold dark:text-white">
-            Welcome to CodeScape.
-          </p>
-          <p>
-            Unlocking the Code to Innovation. Dive Deep into Tech Insights and
-            Master the Art of Development.
-          </p>
-          <p className="text-sm mt-5">
-            You can sign in with your email and password or with a Google
+          <h2 className="text-xl mt-3 font-bold dark:text-white">
+            Welcome to ByteSphere.
+          </h2>
+          <h4 className="mt-1">
+            Exploring the World of Tech, One Byte at a Time.
+          </h4>
+          <h5 className="text-sm mt-4">
+            You can sign up with your email and password or with a Google
             account.
-          </p>
+          </h5>
         </div>
 
         <div className="flex-1">
@@ -154,7 +147,7 @@ const SignIn = () => {
               <OAuth />
             </form>
             <div className="flex gap-2 text-sm mt-5">
-              <span>New to CodeScape?</span>
+              <span>New to ByteSphere?</span>
               <Link to="/sign-up" className="text-blue-500 hover:underline">
                 Sign Up
               </Link>

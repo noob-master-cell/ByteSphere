@@ -2,17 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* General Styles */
 body {
   height: 100vh;
 }
 
-/* Quill Editor */
 .ql-editor {
   font-size: 1.05rem;
 }
 
-/* Post Content */
 .post-content p {
   margin-bottom: 0.5rem;
 }
@@ -35,16 +32,10 @@ body {
   text-decoration: none;
 }
 
-/* Dark Mode Styles */
-.dark .post-content {
-  color: #e5e7eb; /* Light text color for dark mode */
-  background-color: #1f2937; /* Dark background for dark mode */
+.post-content a:hover {
+  text-decoration: underline;
 }
 
 .dark .post-content a {
-  color: #f472b6; /* Light link color for dark mode */
-}
-
-.dark .post-content a:hover {
-  text-decoration: underline;
+  color: red;
 }

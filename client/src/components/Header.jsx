@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Navbar,
-  TextInput,
-  Button,
-  Dropdown,
-  Avatar,
-  DropdownItem,
-} from "flowbite-react";
+import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon, FaSun } from "react-icons/fa"; // Import FaSun icon
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userSlice";
@@ -45,9 +38,9 @@ const Header = () => {
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex items-center transition-transform transform hover:scale-105"
       >
         <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 rounded-lg text-white mr-1">
-          Code
+          Byte
         </span>
-        Scape
+        Sphere
       </Link>
 
       {shouldShowSearch && (
@@ -67,7 +60,7 @@ const Header = () => {
 
       <div className="flex gap-2 md:order-2">
         <Button
-          className="w-12 h-10  hidden sm:inline transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white"
+          className="w-12 h-10 hidden sm:inline transition-transform transform hover:scale-105 dark:bg-gray-700 dark:text-white"
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
@@ -88,18 +81,18 @@ const Header = () => {
               </span>
             </Dropdown.Header>
             <Link to="/dashboard?tab=profile">
-              <DropdownItem className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white">
+              <Dropdown.Item className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white">
                 Profile
-              </DropdownItem>
+              </Dropdown.Item>
             </Link>
             <Dropdown.Divider />
             <Link to="/sign-in">
-              <DropdownItem
+              <Dropdown.Item
                 className="transition-transform transform hover:scale-105 hover:text-indigo-600 dark:hover:text-white"
                 onClick={handleSignout}
               >
                 Sign Out
-              </DropdownItem>
+              </Dropdown.Item>
             </Link>
           </Dropdown>
         ) : (
