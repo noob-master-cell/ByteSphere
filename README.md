@@ -1,6 +1,8 @@
 # ByteSphere
 
-ByteSphere is a responsive tech blog platform that features adaptive light/dark modes, user authentication via Google OAuth, an admin panel, and a comprehensive analytics dashboard. The platform allows users to manage their profiles, create, edit, and delete posts, and engage with content through comments and voting.
+[![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20Now-blue)](https://bytesphere-7v70.onrender.com/)
+
+ByteSphere is a responsive tech blog platform that features adaptive light/dark modes, user authentication via Google OAuth, an admin panel, and a comprehensive analytics dashboard. The platform allows admins to manage their profiles, create, edit, and delete posts, and engage with content through voting.
 
 ## Features
 
@@ -13,11 +15,11 @@ ByteSphere is a responsive tech blog platform that features adaptive light/dark 
 
 ## Tech Stack
 
-- **Frontend**: React.js, Redux, Flowbite-React, Tailwind CSS
-- **Backend**: Node.js, Express.js, MongoDB
-- **Authentication**: Firebase Authentication, Firebase OAuth
-- **Storage**: Firebase Storage
-- **Deployment**: Render
+- **Frontend**: [![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)](https://reactjs.org/) [![Redux](https://img.shields.io/badge/-Redux-764ABC?logo=redux&logoColor=white)](https://redux.js.org/) [![Flowbite-React](https://img.shields.io/badge/-Flowbite--React-0d6efd?logo=flowbite&logoColor=white)](https://flowbite-react.com/) [![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+- **Backend**: [![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white)](https://nodejs.org/) [![Express.js](https://img.shields.io/badge/-Express.js-000000?logo=express&logoColor=white)](https://expressjs.com/) [![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+- **Authentication**: [![Firebase](https://img.shields.io/badge/-Firebase-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)
+- **Storage**: [![Firebase Storage](https://img.shields.io/badge/-Firebase_Storage-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)
+- **Deployment**: [![Render](https://img.shields.io/badge/-Render-0468d7?logo=render&logoColor=white)](https://render.com/)
 
 ## Installation
 
