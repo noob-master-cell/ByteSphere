@@ -14,6 +14,11 @@ export default function PostPage() {
   const [recentPosts, setRecentPosts] = useState(null);
 
   const handleVote = async (postId, type) => {
+    if (!currentUser) {
+      alert("Please login to vote on posts.");
+      return;
+    }
+
     try {
       const res = await fetch(`/api/post/${type}/${postId}`, {
         method: "POST",
@@ -88,7 +93,7 @@ export default function PostPage() {
 
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen text-black dark:text-white">
-      <h1 className="text-3xl mt-10 .p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl bg-gray-200 dark:bg-gray-800 rounded-lg p-4">
+      <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl bg-gray-200 dark:bg-gray-800 rounded-lg p-4">
         {post && post.title}
       </h1>
 
@@ -99,7 +104,7 @@ export default function PostPage() {
           alignItems: "center",
         }}
       >
-        <lable
+        <label
           className="bg-gradient-to-r from-indigo-400 via-purple-350 to-violet-400 text-white my-4"
           style={{
             padding: "0.25em 0.75em",
@@ -108,7 +113,7 @@ export default function PostPage() {
           }}
         >
           {post && post.category}
-        </lable>
+        </label>
       </div>
 
       <img
