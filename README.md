@@ -71,10 +71,6 @@ The application is deployed on Render. Ensure you configure environment variable
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Acknowledgements
 
 - [React.js](https://reactjs.org/)
