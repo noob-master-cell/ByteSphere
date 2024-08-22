@@ -14,7 +14,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 
-const url = `https://bytesphere-7v70.onrender.com/`;
+const url = `https://studentperformancepredictor-enro.onrender.com`;
 const interval = 15000; 
 
 function reloadWebsite() {
