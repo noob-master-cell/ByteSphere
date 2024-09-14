@@ -4,6 +4,12 @@
 
 ByteSphere is a responsive tech blog platform that features adaptive light/dark modes, user authentication via Google OAuth, an admin panel, and a comprehensive analytics dashboard. The platform allows admins to manage their profiles, create, edit, and delete posts, and engage with content through voting.
 
+## Sample
+
+[![Preview Video](https://img.shields.io/badge/Watch%20Video-Click%20Here-red)]([https://www.youtube.com/watch?v=your_video_link](https://drive.google.com/file/d/1Nkzgd1pWeHYHgwmISNmNVhHs9pVTqw6s/view?usp=drive_link))
+
+Check out a brief walkthrough of ByteSphere to see it in action!
+
 ## Features
 
 - **Responsive Design**: The platform is fully responsive with adaptive light/dark modes.
