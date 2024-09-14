@@ -6,7 +6,7 @@ ByteSphere is a responsive tech blog platform that features adaptive light/dark 
 
 ## Sample
 
-[![Preview Video](https://img.shields.io/badge/Watch%20Video-Click%20Here-red)](https://drive.google.com/file/d/1Nkzgd1pWeHYHgwmISNmNVhHs9pVTqw6s/view?usp=drive_link))
+[![Preview Video](https://img.shields.io/badge/Watch%20Video-Click%20Here-red)](https://drive.google.com/file/d/1Nkzgd1pWeHYHgwmISNmNVhHs9pVTqw6s/view?usp=drive_link)
 
 Check out a brief walkthrough of ByteSphere to see it in action!
 
