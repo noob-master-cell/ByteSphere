@@ -8,20 +8,55 @@ export const create = async (req, res, next) => {
   if (!req.body.title || !req.body.content) {
     return next(errorHandler(400, "Please provide all required fields"));
   }
-  const slug = req.body.title
-    .split(" ")
-    .join("-")
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9-]/g, "");
-  const newPost = new Post({
-    ...req.body,
-    slug,
-    userId: req.user.id,
-  });
+  const makeSlug = (str) =>
+    str
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const { title, content, category, image } = req.body;
+  let slug = makeSlug(title);
+
   try {
+    // If slug exists, append a short random suffix
+    const exists = await Post.exists({ slug });
+    if (exists) {
+      slug = `${slug}-${Math.random().toString(36).slice(2, 8)}`;
+    }
+
+    const newPost = new Post({
+      title,
+      content,
+      category,
+      image,
+      slug,
+      userId: req.user.id,
+    });
+
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (error) {
+    // Handle rare duplicate key race: retry once with a different suffix
+    if (error && error.code === 11000 && error.keyPattern && error.keyPattern.slug) {
+      try {
+        const retryPost = new Post({
+          title,
+          content,
+          category,
+          image,
+          slug: `${slug}-${Math.random().toString(36).slice(2, 8)}`,
+          userId: req.user.id,
+        });
+        const savedRetry = await retryPost.save();
+        return res.status(201).json(savedRetry);
+      } catch (retryErr) {
+        return next(retryErr);
+      }
+    }
     next(error);
   }
 };
@@ -31,7 +66,7 @@ export const getposts = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-    const posts = await Post.find({
+    const filter = {
       ...(req.query.userId && { userId: req.query.userId }),
       ...(req.query.category && { category: req.query.category }),
       ...(req.query.slug && { slug: req.query.slug }),
@@ -42,39 +77,34 @@ export const getposts = async (req, res, next) => {
           { content: { $regex: req.query.searchTerm, $options: "i" } },
         ],
       }),
-    })
-      .sort({ updatedAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit)
-      .populate("upvotes", "username") // Populate upvotes with user info
-      .populate("downvotes", "username"); // Populate downvotes with user info
-
-    const totalPosts = await Post.countDocuments();
+    };
 
     const now = new Date();
-
     const oneMonthAgo = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
       now.getDate()
     );
 
-    const lastMonthPosts = await Post.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
+    const [posts, totalPosts, lastMonthPosts] = await Promise.all([
+      Post.find(filter)
+        .sort({ updatedAt: sortDirection })
+        .skip(startIndex)
+        .limit(limit)
+        .populate("upvotes", "username")
+        .populate("downvotes", "username"),
+      Post.countDocuments(filter),
+      Post.countDocuments({ ...filter, createdAt: { $gte: oneMonthAgo } }),
+    ]);
 
-    res.status(200).json({
-      posts,
-      totalPosts,
-      lastMonthPosts,
-    });
+    res.status(200).json({ posts, totalPosts, lastMonthPosts });
   } catch (error) {
     next(error);
   }
 };
 
 export const deletepost = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+  if (!req.user.isAdmin && req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
   }
   try {
@@ -86,18 +116,19 @@ export const deletepost = async (req, res, next) => {
 };
 
 export const updatepost = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+  if (!req.user.isAdmin && req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }
   try {
+    const { title, content, category, image } = req.body;
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
       {
         $set: {
-          title: req.body.title,
-          content: req.body.content,
-          category: req.body.category,
-          image: req.body.image,
+          title,
+          content,
+          category,
+          image,
         },
       },
       { new: true }
@@ -116,18 +147,21 @@ export const upvote = async (req, res, next) => {
     }
 
     const userId = req.user.id;
-    if (post.downvotes.includes(userId)) {
-      post.downvotes.pull(userId);
+    const hasUpvoted = post.upvotes.some((id) => id.toString() === userId);
+    // Always remove from both arrays first to maintain invariants
+    await Post.findByIdAndUpdate(post._id, {
+      $pull: { upvotes: userId, downvotes: userId },
+    });
+
+    // If it wasn't previously upvoted, add it
+    if (!hasUpvoted) {
+      await Post.findByIdAndUpdate(post._id, { $addToSet: { upvotes: userId } });
     }
 
-    if (post.upvotes.includes(userId)) {
-      post.upvotes.pull(userId);
-    } else {
-      post.upvotes.push(userId);
-    }
-
-    await post.save();
-    res.status(200).json(post);
+    const updated = await Post.findById(post._id)
+      .populate("upvotes", "username")
+      .populate("downvotes", "username");
+    res.status(200).json(updated);
   } catch (error) {
     next(error);
   }
@@ -141,18 +175,21 @@ export const downvote = async (req, res, next) => {
     }
 
     const userId = req.user.id;
-    if (post.upvotes.includes(userId)) {
-      post.upvotes.pull(userId);
+    const hasDownvoted = post.downvotes.some((id) => id.toString() === userId);
+    // Always remove from both arrays first to maintain invariants
+    await Post.findByIdAndUpdate(post._id, {
+      $pull: { upvotes: userId, downvotes: userId },
+    });
+
+    // If it wasn't previously downvoted, add it
+    if (!hasDownvoted) {
+      await Post.findByIdAndUpdate(post._id, { $addToSet: { downvotes: userId } });
     }
 
-    if (post.downvotes.includes(userId)) {
-      post.downvotes.pull(userId);
-    } else {
-      post.downvotes.push(userId);
-    }
-
-    await post.save();
-    res.status(200).json(post);
+    const updated = await Post.findById(post._id)
+      .populate("upvotes", "username")
+      .populate("downvotes", "username");
+    res.status(200).json(updated);
   } catch (error) {
     next(error);
   }

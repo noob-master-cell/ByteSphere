@@ -14,21 +14,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 
-const url = `https://bytesphere-7v70.onrender.com`;
-const interval = 15000; 
-
-function reloadWebsite() {
-  axios.get(url)
-    .then(response => {
-      console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
-    })
-    .catch(error => {
-      console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
-    });
-}
-
-
-setInterval(reloadWebsite, interval);
+// Removed keep-alive ping. Prefer server-side uptime pings.
 
 function App() {
   return (

@@ -3,6 +3,14 @@ import bcryptjs from "bcryptjs"; // Importing bcryptjs for password hashing
 import { errorHandler } from "../utils/error.js"; // Importing errorHandler utility function for error handling
 import jwt from "jsonwebtoken"; // Importing jsonwebtoken for generating JWT tokens
 
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  path: "/",
+};
+
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body; // Destructuring username, email, and password from request body
 
@@ -56,16 +64,15 @@ export const signin = async (req, res, next) => {
 
     const token = jwt.sign(
       { id: validUser._id, isAdmin: validUser.isAdmin },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
     );
     const { password: pass, ...rest } = validUser._doc;
 
     res
       .status(200)
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .json({ rest });
+      .cookie("access_token", token, COOKIE_OPTIONS)
+      .json(rest);
   } catch (error) {
     next(error);
   }
@@ -77,15 +84,11 @@ export const google = async (req, res, next) => {
     if (user) {
       const token = jwt.sign(
         { id: user._id, isAdmin: user.isAdmin },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
       );
       const { password, ...rest } = user._doc;
-      res
-        .status(200)
-        .cookie("access_token", token, {
-          httpOnly: true,
-        })
-        .json(rest);
+      res.status(200).cookie("access_token", token, COOKIE_OPTIONS).json(rest);
     } else {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
@@ -102,15 +105,11 @@ export const google = async (req, res, next) => {
       await newUser.save();
       const token = jwt.sign(
         { id: newUser._id, isAdmin: newUser.isAdmin },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
       );
       const { password, ...rest } = newUser._doc;
-      res
-        .status(200)
-        .cookie("access_token", token, {
-          httpOnly: true,
-        })
-        .json(rest);
+      res.status(200).cookie("access_token", token, COOKIE_OPTIONS).json(rest);
     }
   } catch (error) {
     next(error);
