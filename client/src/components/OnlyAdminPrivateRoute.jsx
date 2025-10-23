@@ -7,7 +7,7 @@ const OnlyAdminPrivateRoute = () => {
   return currentUser && currentUser.isAdmin ? (
     <Outlet />
   ) : (
-    <Navigate to="dashboard?tab=profile" />
+    <Navigate to="/dashboard?tab=profile" />
   );
 };
 

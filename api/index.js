@@ -7,6 +7,10 @@ import postRoutes from "./routes/post.route.js"; // Importing post routes
 import cookieParser from "cookie-parser"; // Importing cookie-parser for managing cookies
 import path from "path";
 import cors from "cors"; // Importing CORS for cross-origin requests
+import helmet from "helmet";
+import compression from "compression";
+import hpp from "hpp";
+import rateLimit from "express-rate-limit";
 
 dotenv.config(); // Loading environment variables from .env file
 
@@ -25,10 +29,35 @@ const __dirname = path.resolve();
 const app = express(); // Creating an Express application
 
 // Middleware
-app.use(cors()); // Enabling CORS
-app.use(express.json()); // Middleware to parse JSON request bodies
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:5173").split(","
+);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow server-to-server or dev tools (no origin)
+      if (!origin) return callback(null, true);
+      return allowedOrigins.includes(origin)
+        ? callback(null, true)
+        : callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+); // Enabling CORS with credentials
+app.use(helmet());
+app.use(compression());
+app.use(hpp());
+app.use(
+  
+  express.json({ limit: "100kb" })
+); // Middleware to parse JSON request bodies with limit
 app.use(cookieParser()); // Middleware to parse cookies
 app.use(express.static(path.join(__dirname, "/client/dist"))); // Serving static files from client
+
+// Rate limit auth endpoints (register before routes)
+app.use(
+  "/api/auth",
+  rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })
+);
 
 // Routes
 app.use("/api/user", userRoutes); // Mounting user routes under /api/user
